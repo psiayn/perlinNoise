@@ -1,16 +1,17 @@
 
 let noiseScal = 0.01;
-
+let c;
 function setup() {
-  createCanvas(400, 400);
+  c = createCanvas(600, 800);
   pixelDensity(1);
+  // saveCanvas(c, 'myCanvas', 'jpg');
   // frameRate(1);
 }
 
 var off = 0;
 
 function draw() {
-  background("aqua");
+  background("blue");
   loadPixels();
   
   // off = 0;
@@ -18,7 +19,7 @@ function draw() {
   for (var y = 0; y < height; y++) {
     var xoff = 0;
     for (var x = 0; x < width; x++) {
-      var index = (x + y * width) * 4;
+      var index = (x + y * (width )) * 4;
       pixels[index + 0] = red(colorPicker(noise(xoff,off)));
       pixels[index + 1] = green(colorPicker(noise(xoff,off)));
       pixels[index + 2] = blue(colorPicker(noise(xoff,off)));
@@ -28,7 +29,7 @@ function draw() {
     off+=noiseScal ;
   }
   updatePixels();
-  //noLoop();
+  noLoop();
 }
 
 function colorPicker(noiseVal){
@@ -50,11 +51,16 @@ function colorPicker(noiseVal){
    else if(noiseVal > 0.55 && noiseVal <= 0.6)
        return color(224, 224, 0);
   
-   else if(noiseVal > 0.6 && noiseVal <= 0.75)
+   else if(noiseVal > 0.6 && noiseVal <= 0.65)
        return color(128, 128, 128);
 
    else
        return color(255, 255, 255);
-   
+
 }
     
+function keyPressed(){
+  if (key == 's' || key == 'S'){
+    saveCanvas(c, 'myCanvas', 'jpg');
+  }
+}
